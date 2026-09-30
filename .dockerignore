@@ -1,0 +1,29 @@
+.git
+.gitignore
+.venv
+venv
+__pycache__
+*.pyc
+.env
+.idea
+.vscode
+
+# 运行期数据：镜像里不要带本机的知识库和会话记录
+data/app.db
+data/app.db-wal
+data/app.db-shm
+data/chroma
+data/memory_index.json
+data/memory_index.tmp
+data/uploads
+data/traces
+data/_eval
+data/corpus
+
+# 教学文档：镜像里不需要
+代码逐行讲解与实验手册.md
+项目讲解与学习路线.md
+
+.pytest_cache
+.DS_Store
+Thumbs.db

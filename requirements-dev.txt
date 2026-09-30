@@ -1,0 +1,6 @@
+# ---- 开发/测试依赖（生产镜像不需要）----
+# 安装：pip install -r requirements-dev.txt
+-r requirements.txt
+
+pytest>=8.0
+httpx>=0.27          # FastAPI TestClient 与 rerank 精排调用都用它

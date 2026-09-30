@@ -1,0 +1,43 @@
+# ---- Web 框架 ----
+fastapi>=0.110
+# 故意用纯 uvicorn 而不是 uvicorn[standard]：
+# [standard] 会额外拉 watchfiles / httptools / websockets 等可选包，
+# 只要其中任何一个在你的 Python 版本上没有 wheel，整条 pip install 就会失败。
+# 本项目不需要它们（watchfiles 只有 --reload 热重载才用得上）。
+# 想要热重载 → pip install watchfiles
+uvicorn>=0.29
+python-multipart>=0.0.9
+
+# ---- 配置 ----
+python-dotenv>=1.0.1
+
+# ---- 大模型：OpenAI 兼容协议（DeepSeek / 通义 / 智谱 / 硅基流动 等）----
+openai>=1.30
+
+# ---- PDF 解析 ----
+pypdf>=4.2
+
+# ---- 精排（rerank）接口调用 ----
+# app/retrieval.py 里调百炼 / 硅基流动的 rerank HTTP 接口用它。
+# 没装也能跑：会自动退回标准库 urllib。装了只是为了连接复用和更清晰的超时控制。
+httpx>=0.27
+
+# ---- 可选：内置向量库的加速 ----
+# 装了 numpy，MemoryStore 会走矩阵化检索（1700 段从 ~0.2s 降到毫秒级）；
+# 没装也能跑，只是逐条算余弦会慢一些。Chroma 后端用不到它。
+# numpy>=1.26
+
+# ===================================================================
+# 注意：chromadb 故意没有写在这个文件里。
+#
+# 原因：某些 Python 版本上 chromadb 没有可用的 wheel，
+#       一旦写进来，pip install -r requirements.txt 会在最后一步
+#       整个报错退出：
+#         ERROR: Could not find a version that satisfies the requirement chromadb
+#
+# 你不需要它也能完整运行：项目内置了纯 Python 向量库
+# （app/vectorstore.py 里的 MemoryStore），缺少 chromadb 时会自动使用，
+# 接口、检索、引用、流式输出全部功能一致，已实测通过。
+#
+# 想要真实 Chroma 向量数据库 → 见 requirements-chroma.txt
+# ===================================================================
